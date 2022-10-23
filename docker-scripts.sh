@@ -62,7 +62,7 @@ make-data-folder-accessible(){
 }
 
 lnbits-regtest-stop(){
-  docker compose down --volumes
+  docker compose -p $COMPOSE_PROJECT_NAME down --volumes
   # clean up lightning node data
   sudo rm -rf ./data/clightning-1 ./data/clightning-2 ./data/lnd-1  ./data/lnd-2 ./data/lnd-3 ./data/boltz/boltz.db
   # recreate lightning node data folders preventing permission errors
