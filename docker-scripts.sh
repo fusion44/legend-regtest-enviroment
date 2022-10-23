@@ -43,12 +43,22 @@ lnbits-regtest-start(){
   lnbits-regtest-stop
   docker compose up -d --remove-orphans
   lnbits-regtest-init
+  make-data-folder-accessible
 }
 
 lnbits-regtest-start-log(){
   lnbits-regtest-stop
   docker compose up --remove-orphans
   lnbits-regtest-init
+  make-data-folder-accessible
+}
+
+make-data-folder-accessible(){
+  echo "sudo chmod 777 on data folder"
+  sudo chmod -R 777 ./data
+  sudo chown -R f44 ./data
+  echo "========= data folder is now public ============="
+  echo ""
 }
 
 lnbits-regtest-stop(){
