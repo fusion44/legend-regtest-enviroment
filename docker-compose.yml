@@ -44,7 +44,6 @@ services:
       - lnbits
     image: cashu:0.4.2
     entrypoint: "sh -c 'sleep 60; sh /app/entrypoint.sh'"
-    # entrypoint: "poetry run mint --port 3338 --host 0.0.0.0"
     ports:
       - 3338:3338
     environment:
