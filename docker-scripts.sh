@@ -23,14 +23,14 @@ lncli-sim() {
 fund_clightning_node() {
   address=$(lightning-cli-sim $1 newaddr | jq -r .bech32)
   echo "funding: $address on clightning-node: $1"
-  bitcoin-cli-sim -named sendtoaddress address=$address amount=10 fee_rate=100 > /dev/null
+  bitcoin-cli-sim -named sendtoaddress address=$address amount=30 fee_rate=100 > /dev/null
 }
 
 # args(i)
 fund_lnd_node() {
   address=$(lncli-sim $1 newaddress p2wkh | jq -r .address)
   echo "funding: $address on lnd-node: $1"
-  bitcoin-cli-sim -named sendtoaddress address=$address amount=10 fee_rate=100 > /dev/null
+  bitcoin-cli-sim -named sendtoaddress address=$address amount=30 fee_rate=100 > /dev/null
 }
 
 # args(i, j)
@@ -114,9 +114,9 @@ lnbits-lightning-init(){
 
   lnbits-lightning-sync
 
-  channel_size=16000000 # 0.016 btc
-  balance_size=8000000 # 0.08 btc
-  balance_size_msat=8000000000 # 0.08 btc
+  channel_size=24000000 # 0.024 btc
+  balance_size=12000000 # 0.12 btc
+  balance_size_msat=12000000000 # 0.12 btc
 
 
   # lnd-1 -> lnd-2
@@ -173,6 +173,9 @@ lnbits-lightning-init(){
   wait-for-clightning-channel 2
 
   lnbits-lightning-sync
+
+  echo "wait for 15s... warmup..."
+  sleep 15
 
 }
 
