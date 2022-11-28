@@ -1,6 +1,5 @@
 version: "3.7"
 services:
-
   lnbits:
     hostname: lnbits
     depends_on:
@@ -38,8 +37,9 @@ services:
     volumes:
       - ./data/lnd-2:/data/lnd/
       - ./data/boltz/:/root/.boltz/
-  cashu-mint:
-    hostname: cashu-mint
+
+  cashu-mint-1:
+    hostname: cashu-mint-1
     depends_on:
       - lnbits
     image: cashu:0.4.2
@@ -49,7 +49,21 @@ services:
     environment:
       MINT_PRIVATE_KEY: supersecretprivatekey
     volumes:
-      - ./data/cashu/:/root/.cashu/
+      - ./data/cashu-1/:/root/.cashu/
+
+  cashu-mint-2:
+    hostname: cashu-mint-2
+    depends_on:
+      - lnbits
+    image: cashu:0.4.2
+    entrypoint: "sh -c 'sleep 60; sh /app/entrypoint.sh'"
+    ports:
+      - 3339:3338
+    environment:
+      MINT_PRIVATE_KEY: supersecretprivatekey
+    volumes:
+      - ./data/cashu-2/:/root/.cashu/
+
   bitcoind:
     hostname: bitcoind
     image: boltz/bitcoin-core:23.0
@@ -59,7 +73,8 @@ services:
       - 29001
       - 18443
       - 18444
-
+    ports:
+      - 18443:18443
   clightning-1:
     hostname: clightning-1
     depends_on:
