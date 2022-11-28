@@ -41,14 +41,14 @@ connect_clightning_node() {
 
 lnbits-regtest-start(){
   lnbits-regtest-stop
-  docker compose up -d --remove-orphans
+  docker compose up --build -d --remove-orphans
   lnbits-regtest-init
   make-data-folder-accessible
 }
 
 lnbits-regtest-start-log(){
   lnbits-regtest-stop
-  docker compose up --remove-orphans
+  docker compose up --build --remove-orphans
   lnbits-regtest-init
   make-data-folder-accessible
 }
