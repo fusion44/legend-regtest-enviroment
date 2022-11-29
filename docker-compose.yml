@@ -118,6 +118,51 @@ services:
     volumes:
       - ./data/lnd-1:/root/.lnd/
 
+  blitz-lnd-1:
+    hostname: blitz-lnd-1
+    depends_on:
+      - redis
+    image: blitz_api:latest
+    restart: on-failure
+    entrypoint: "sh /code/entrypoint.sh"
+    expose:
+      - 80
+    ports:
+      - 8822:80
+    volumes:
+      - ./data:/root/data
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDID_DB: 0
+      LN_BACKEND: lnd-1
+
+  blitz-cln-1:
+    hostname: blitz-cln-1
+    depends_on:
+      - redis
+    image: blitz_api:latest
+    restart: on-failure
+    entrypoint: "sh /code/entrypoint.sh"
+    expose:
+      - 80
+    ports:
+      - 8823:80
+    volumes:
+      - ./data:/root/data
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDID_DB: 1
+      LN_BACKEND: cln-1
+
+  redis:
+    hostname: redis
+    image: redis:7.0.5
+    restart: on-failure
+    expose:
+      - 6379
+
   lnd-2:
     hostname: lnd-2
     depends_on:

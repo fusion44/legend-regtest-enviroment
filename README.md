@@ -66,4 +66,10 @@ docker logs lnbits-legend-lnbits-1 -f
 docker logs lnbits-legend-boltz-1 -f
 docker logs lnbits-legend-clightning-1-1 -f
 docker logs lnbits-legend-lnd-2-1 -f
+docker logs lnbits-legend-blitz-lnd-1-1 -f
+```
+
+# logging into a container
+```console
+docker exec -it lnbits-legend-blitz-lnd-1-1 /bin/bash
 ```
